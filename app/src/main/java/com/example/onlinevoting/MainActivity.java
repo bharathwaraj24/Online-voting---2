@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import androidx.activity.EdgeToEdge;
@@ -18,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     EditText username, password;
+    DatabaseHelper databaseHelper;
 
     boolean isAllFieldsChecked = false;
     @Override
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         ImageView imageView = findViewById(R.id.giphy);
 
+        databaseHelper = new DatabaseHelper(this);
+
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
 
@@ -36,11 +40,17 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isAllFieldsChecked = CheckAllFields();
+                String enteredUsername = username.getText().toString().trim();
+                String enteredPassword = password.getText().toString().trim();
 
-                if(isAllFieldsChecked) {
+                boolean isValid = databaseHelper.checkUser(enteredUsername, enteredPassword);
+
+                if (isValid) {
+                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), Home.class);
                     startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class Register extends AppCompatActivity {
 
     EditText uname, email, dob, pass, confirmpass;
+    DatabaseHelper databaseHelper;
     boolean isAllFieldsChecked = false;
 
     @Override
@@ -28,6 +30,7 @@ public class Register extends AppCompatActivity {
             return insets;
         });
 
+        databaseHelper = new DatabaseHelper(this);
         uname = findViewById(R.id.uname);
         email = findViewById(R.id.email);
         dob = findViewById(R.id.dob);
@@ -38,12 +41,23 @@ public class Register extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isAllFieldsChecked = CheckAllFields();
+                if (CheckAllFields()) {
+                    long result = databaseHelper.addUser(
+                            uname.getText().toString().trim(),
+                            email.getText().toString().trim(),
+                            dob.getText().toString().trim(),
+                            pass.getText().toString().trim()
+                    );
 
-                if(isAllFieldsChecked) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+                    if (result != -1) {
+                        Toast.makeText(Register.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(Register.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
 
@@ -70,8 +84,8 @@ public class Register extends AppCompatActivity {
             confirmpass.setError("Password must contain 8 characters!");
             return false;
         }
-        if (confirmpass != pass) {
-            confirmpass.setError("Password must same as above!");
+        if (!confirmpass.getText().toString().equals(pass.getText().toString())) {
+            confirmpass.setError("Password must be the same as above!");
             return false;
         }
         if(email.length() == 0){
