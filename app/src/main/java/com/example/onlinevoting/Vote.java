@@ -32,55 +32,58 @@ public class Vote extends AppCompatActivity {
             return insets;
         });
 
-
         Button vote2 = findViewById(R.id.vote2);
         Button vote1 = findViewById(R.id.vote1);
         LottieAnimationView animationView = findViewById(R.id.voted);
-    vote1.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            votecount1++;
 
-            vote1.setEnabled(false);
-            vote2.setEnabled(false);
-            animationView.setVisibility(View.VISIBLE);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
-            // Load and play the Lottie animation
-            animationView.setAnimation(R.raw.voted);
-            animationView.playAnimation();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(Vote.this, Result.class);
-                    intent.putExtra("voteCount1", votecount1);
-                    startActivity(intent);
-                }
-            }, 2000);
+        vote1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                votecount1++;
+                databaseHelper.addVote(1, votecount1);
 
-        }
-    });
+                vote1.setEnabled(false);
+                vote2.setEnabled(false);
+                animationView.setVisibility(View.VISIBLE);
 
-    vote2.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            votecount2++;
+                // Load and play the Lottie animation
+                animationView.setAnimation(R.raw.voted);
+                animationView.playAnimation();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(Vote.this, Result.class);
+                        intent.putExtra("voteCount1", votecount1);
+                        startActivity(intent);
+                    }
+                }, 2000);
+            }
+        });
 
-            vote1.setEnabled(false);
-            vote2.setEnabled(false);
-            animationView.setVisibility(View.VISIBLE);
+        vote2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                votecount2++;
+                databaseHelper.addVote(2, votecount2);
 
-            // Load and play the Lottie animation
-            animationView.setAnimation(R.raw.voted);
-            animationView.playAnimation();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(Vote.this, Result.class);
-                    intent.putExtra("voteCount2", votecount2);
-                    startActivity(intent);
-                }
-            }, 2000);
-        }
-    });
+                vote1.setEnabled(false);
+                vote2.setEnabled(false);
+                animationView.setVisibility(View.VISIBLE);
+
+                // Load and play the Lottie animation
+                animationView.setAnimation(R.raw.voted);
+                animationView.playAnimation();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(Vote.this, Result.class);
+                        intent.putExtra("voteCount2", votecount2);
+                        startActivity(intent);
+                    }
+                }, 2000);
+            }
+        });
     }
 }

@@ -18,6 +18,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DOB = "dob";
     public static final String COLUMN_PASSWORD = "password";
 
+    public static final String TABLE_VOTES = "votes";
+    public static final String COLUMN_CANDIDATE_ID = "candidate_id";
+    public static final String COLUMN_VOTE_COUNT = "vote_count";
+
     private static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -26,6 +30,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_DOB + " TEXT, " +
                     COLUMN_PASSWORD + " TEXT)";
 
+    private static final String CREATE_VOTES_TABLE =
+            "CREATE TABLE " + TABLE_VOTES + " (" +
+                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_CANDIDATE_ID + " INTEGER, " +
+                    COLUMN_VOTE_COUNT + " INTEGER)";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -33,11 +43,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_VOTES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VOTES);
         onCreate(db);
     }
 
@@ -66,4 +78,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return count > 0;
     }
 
+    public long addVote(int candidateId, int voteCount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CANDIDATE_ID, candidateId);
+        values.put(COLUMN_VOTE_COUNT, voteCount);
+        long result = db.insert(TABLE_VOTES, null, values);
+        db.close();
+        return result;
+    }
 }
