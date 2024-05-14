@@ -13,11 +13,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Register extends AppCompatActivity {
 
     EditText uname, email, dob, pass, confirmpass;
     DatabaseHelper databaseHelper;
     boolean isAllFieldsChecked = false;
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,25 +46,25 @@ public class Register extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (CheckAllFields()) {
-                    long result = databaseHelper.addUser(
-                            uname.getText().toString().trim(),
-                            email.getText().toString().trim(),
-                            dob.getText().toString().trim(),
-                            pass.getText().toString().trim()
-                    );
+                database = FirebaseDatabase.getInstance();
+                reference = database.getReference("users");
 
-                    if (result != -1) {
-                        Toast.makeText(Register.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(Register.this, "Registration failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                String name = uname.getText().toString();
+                String mail = email.getText().toString();
+                String dateob = dob.getText().toString();
+                String password = pass.getText().toString();
+
+                HelperClass helperclass = new HelperClass(name,mail,dateob,password);
+                reference.child(name).setValue(helperclass);
+
+                Toast.makeText(Register.this, "You have registered successfully!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Register.this, MainActivity.class);
+                startActivity(intent);
 
             }
         });
+
+
 
     }
 
