@@ -15,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Home extends AppCompatActivity {
 
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,9 @@ public class Home extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Retrieve the username passed from MainActivity
+        username = getIntent().getStringExtra("username");
 
         Button logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
@@ -49,10 +54,9 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Vote.class);
+                intent.putExtra("username", username); // Pass the username to the Vote activity
                 startActivity(intent);
-
             }
-
         });
 
         Button result = findViewById(R.id.result);

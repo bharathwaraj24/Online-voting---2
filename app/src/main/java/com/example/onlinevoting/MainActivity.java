@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,14 +23,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
 public class MainActivity extends AppCompatActivity {
 
     EditText username, password;
     DatabaseHelper databaseHelper;
 
-    boolean isAllFieldsChecked = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,15 +46,13 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!validateUsername() | !validatePassword()){
-
-                }else{
+                if (!validateUsername() | !validatePassword()) {
+                    // Do nothing if validation fails
+                } else {
                     checkUser();
                 }
             }
         });
-
-
 
         Button btn2 = findViewById(R.id.signup);
         btn2.setOnClickListener(new View.OnClickListener() {
@@ -74,31 +68,31 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
     }
-    public Boolean validateUsername(){
+
+    public Boolean validateUsername() {
         String val = username.getText().toString();
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             username.setError("Username field cannot be empty!");
             return false;
-        }else{
+        } else {
             username.setError(null);
             return true;
         }
     }
 
-    public Boolean validatePassword(){
+    public Boolean validatePassword() {
         String val = password.getText().toString();
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             password.setError("Password field cannot be empty!");
             return false;
-        }else{
+        } else {
             password.setError(null);
             return true;
         }
     }
 
-    public void checkUser(){
+    public void checkUser() {
         String uname = username.getText().toString().trim();
         String upass = password.getText().toString().trim();
 
@@ -108,20 +102,21 @@ public class MainActivity extends AppCompatActivity {
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     username.setError(null);
-                    String passwordfromdb = snapshot.child(uname).child("pass").getValue(String.class);
+                    String passwordFromDb = snapshot.child(uname).child("pass").getValue(String.class);
 
-                    if(passwordfromdb.equals(upass)){
+                    if (passwordFromDb.equals(upass)) {
                         username.setError(null);
                         Intent intent = new Intent(MainActivity.this, Home.class);
+                        intent.putExtra("username", uname); // Pass username to Home activity
                         startActivity(intent);
-
-                    }else{
+                        finish();
+                    } else {
                         password.setError("Invalid Username/Password!");
                         password.requestFocus();
                     }
-                }else{
+                } else {
                     username.setError("Username doesn't exist!");
                     username.requestFocus();
                 }
@@ -129,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(MainActivity.this, "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show(); // Show database error
             }
         });
     }

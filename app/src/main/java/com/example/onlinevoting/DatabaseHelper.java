@@ -1,90 +1,21 @@
 package com.example.onlinevoting;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-    private static final String DATABASE_NAME = "mydatabase.db";
-    private static final int DATABASE_VERSION = 1;
+public class DatabaseHelper {
 
-    public static final String TABLE_NAME = "users";
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_USERNAME = "username";
-    public static final String COLUMN_EMAIL = "email";
-    public static final String COLUMN_DOB = "dob";
-    public static final String COLUMN_PASSWORD = "password";
-
-    public static final String TABLE_VOTES = "votes";
-    public static final String COLUMN_CANDIDATE_ID = "candidate_id";
-    public static final String COLUMN_VOTE_COUNT = "vote_count";
-
-    private static final String CREATE_TABLE =
-            "CREATE TABLE " + TABLE_NAME + " (" +
-                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_USERNAME + " TEXT, " +
-                    COLUMN_EMAIL + " TEXT, " +
-                    COLUMN_DOB + " TEXT, " +
-                    COLUMN_PASSWORD + " TEXT)";
-
-    private static final String CREATE_VOTES_TABLE =
-            "CREATE TABLE " + TABLE_VOTES + " (" +
-                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_CANDIDATE_ID + " INTEGER, " +
-                    COLUMN_VOTE_COUNT + " INTEGER)";
+    private final DatabaseReference databaseReference;
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference();
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
-        db.execSQL(CREATE_VOTES_TABLE);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VOTES);
-        onCreate(db);
-    }
-
-    public long addUser(String username, String email, String dob, String password) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_USERNAME, username);
-        values.put(COLUMN_EMAIL, email);
-        values.put(COLUMN_DOB, dob);
-        values.put(COLUMN_PASSWORD, password);
-        long result = db.insert(TABLE_NAME, null, values);
-        db.close();
-        return result;
-    }
-
-    public boolean checkUser(String username, String password) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {COLUMN_ID};
-        String selection = COLUMN_USERNAME + " = ?" + " AND " + COLUMN_PASSWORD + " = ?";
-        String[] selectionArgs = {username, password};
-        Cursor cursor = db.query(TABLE_NAME, columns, selection, selectionArgs,
-                null, null, null);
-        int count = cursor.getCount();
-        cursor.close();
-        db.close();
-        return count > 0;
-    }
-
-    public long addVote(int candidateId, int voteCount) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CANDIDATE_ID, candidateId);
-        values.put(COLUMN_VOTE_COUNT, voteCount);
-        long result = db.insert(TABLE_VOTES, null, values);
-        db.close();
-        return result;
+    public void addVote(int candidate, int count) {
+        String candidateKey = candidate == 1 ? "candidate1" : "candidate2";
+        databaseReference.child(candidateKey).setValue(count);
     }
 }

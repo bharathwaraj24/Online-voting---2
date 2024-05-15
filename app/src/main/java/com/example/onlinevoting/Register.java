@@ -20,7 +20,6 @@ public class Register extends AppCompatActivity {
 
     EditText uname, email, dob, pass, confirmpass;
     DatabaseHelper databaseHelper;
-    boolean isAllFieldsChecked = false;
     FirebaseDatabase database;
     DatabaseReference reference;
 
@@ -46,26 +45,25 @@ public class Register extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                database = FirebaseDatabase.getInstance();
-                reference = database.getReference("users");
+                if (CheckAllFields()) { // Check all fields before proceeding
+                    database = FirebaseDatabase.getInstance();
+                    reference = database.getReference("users");
 
-                String name = uname.getText().toString();
-                String mail = email.getText().toString();
-                String dateob = dob.getText().toString();
-                String password = pass.getText().toString();
+                    String name = uname.getText().toString();
+                    String mail = email.getText().toString();
+                    String dateob = dob.getText().toString();
+                    String password = pass.getText().toString();
 
-                HelperClass helperclass = new HelperClass(name,mail,dateob,password);
-                reference.child(name).setValue(helperclass);
+                    HelperClass helperclass = new HelperClass(name, mail, dateob, password);
+                    reference.child(name).setValue(helperclass);
 
-                Toast.makeText(Register.this, "You have registered successfully!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Register.this, MainActivity.class);
-                startActivity(intent);
-
+                    Toast.makeText(Register.this, "You have registered successfully!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Register.this, MainActivity.class);
+                    intent.putExtra("username", name); // Pass username to MainActivity
+                    startActivity(intent);
+                }
             }
         });
-
-
-
     }
 
     private boolean CheckAllFields() {
@@ -93,15 +91,14 @@ public class Register extends AppCompatActivity {
             confirmpass.setError("Password must be the same as above!");
             return false;
         }
-        if(email.length() == 0){
+        if (email.length() == 0) {
             email.setError("This field is required!");
             return false;
         }
-        if(dob.length() == 0){
+        if (dob.length() == 0) {
             dob.setError("This field is required!");
             return false;
         }
         return true;
-
     }
 }
