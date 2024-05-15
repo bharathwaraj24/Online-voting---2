@@ -5,134 +5,100 @@
     android:id="@+id/resultpage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/colorkit"
+    android:background="@android:color/holo_orange_light"
     tools:context=".Vote"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="135dp">
 
 
     <TextView
-        android:id="@+id/desc1"
-        android:layout_width="191dp"
-        android:layout_height="252dp"
-        android:fontFamily="@font/alfa_slab_one"
-        android:text="BAC Party Won: 02      Lost: 01 "
+        android:id="@+id/can1"
+        android:layout_width="154dp"
+        android:layout_height="57dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Candidate 1"
         android:textColor="#F3F1F1"
         android:textSize="24sp"
-        android:textStyle="italic"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.941" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/desc2"
-        android:layout_width="191dp"
-        android:layout_height="252dp"
-        android:fontFamily="@font/alfa_slab_one"
-        android:text="ABC Party Won: 01      Lost: 02 "
+        android:id="@+id/can2"
+        android:layout_width="154dp"
+        android:layout_height="57dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Candidate 2"
         android:textColor="#F3F1F1"
         android:textSize="24sp"
-        android:textStyle="italic"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img2"
+        android:layout_width="144dp"
+        android:layout_height="154dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.865"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.942" />
+        app:layout_constraintVertical_bias="0.256"
+        app:srcCompat="@drawable/baseline_account_circle_24"
+        app:strokeColor="@color/white"
+        app:strokeWidth="5dp" />
 
-        <TextView
-            android:id="@+id/can1"
-            android:layout_width="154dp"
-            android:layout_height="57dp"
-            android:fontFamily="@font/alfa_slab_one"
-            android:text="Candidate 1"
-            android:textColor="#F3F1F1"
-            android:textSize="24sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.112"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.422" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="330dp"
+        android:layout_height="53dp"
+        android:fontFamily="@font/poppins_black"
+        android:text="Candidate List"
+        android:textColor="#000000"
+        android:textSize="32sp"
 
-        <TextView
-            android:id="@+id/can2"
-            android:layout_width="154dp"
-            android:layout_height="57dp"
-            android:fontFamily="@font/alfa_slab_one"
-            android:text="Candidate 2"
-            android:textColor="#F3F1F1"
-            android:textSize="24sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.859"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.422" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.355"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
 
-        <ImageView
-            android:id="@+id/img2"
-            android:layout_width="144dp"
-            android:layout_height="154dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.827"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.201"
-            app:srcCompat="@drawable/baseline_account_circle_24"
-            app:strokeColor="@color/white"
-            app:strokeWidth="5dp" />
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="144dp"
+        android:layout_height="154dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.256"
+        app:srcCompat="@drawable/baseline_account_circle_24"
+        app:strokeColor="@color/white"
+        app:strokeWidth="5dp" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="330dp"
-            android:layout_height="53dp"
-            android:fontFamily="@font/alfa_slab_one"
-            android:text="Candidate List"
-            android:textColor="#F3F1F1"
-            android:textSize="24sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.355"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.05" />
+    <Button
+        android:id="@+id/vote1"
+        android:layout_width="163dp"
+        android:layout_height="73dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Vote"
+        android:textSize="20sp"
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="144dp"
-            android:layout_height="154dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.108"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.201"
-            app:srcCompat="@drawable/baseline_account_circle_24"
-            app:strokeColor="@color/white"
-            app:strokeWidth="5dp" />
-
-        <Button
-            android:id="@+id/vote1"
-            android:layout_width="163dp"
-            android:layout_height="73dp"
-            android:fontFamily="@font/alfa_slab_one"
-            android:text="Vote"
-            android:textSize="20sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.116"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.556" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.645" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/voted"
@@ -150,18 +116,18 @@
         app:lottie_rawRes="@raw/voted" />
 
     <Button
-            android:id="@+id/vote2"
-            android:layout_width="163dp"
-            android:layout_height="73dp"
-            android:fontFamily="@font/alfa_slab_one"
-            android:text="Vote"
-            android:textSize="20sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.891"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.556" />
+        android:id="@+id/vote2"
+        android:layout_width="163dp"
+        android:layout_height="73dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Vote"
+        android:textSize="20sp"
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.895"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.645" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
